@@ -1,5 +1,9 @@
 *.class
 
+# test files, test results #
+*.pdb
+*.txt
+
 # Package Files #
 *.jar
 *.war
