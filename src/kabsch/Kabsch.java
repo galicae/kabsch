@@ -1,4 +1,5 @@
 package kabsch;
+
 import cern.colt.matrix.DoubleFactory1D;
 import cern.colt.matrix.DoubleMatrix1D;
 import cern.colt.matrix.DoubleMatrix2D;
@@ -51,19 +52,28 @@ public class Kabsch {
 	}
 
 	private double calculateInitError() {
-		double e = 0;
+		double pInit = 0;
+		double qInit = 0;
+		double tx = 0, ty = 0, tz = 0;
+
 		for (int i = 0; i < p.rows(); i++) {
-			for (int j = 0; j < 2; j++) {
-				e += p.get(i, j) * p.get(i, j);
-				e += q.get(i, j) * q.get(i, j);
-			}
+			tx = Math.pow(p.get(i, x), 2);
+			ty = Math.pow(p.get(i, y), 2);
+			tz = Math.pow(p.get(i, z), 2);
+			pInit += tx + ty + tz;
 		}
-		return e;
+
+		for (int i = 0; i < q.rows(); i++) {
+			tx = Math.pow(q.get(i, x), 2);
+			ty = Math.pow(q.get(i, y), 2);
+			tz = Math.pow(q.get(i, z), 2);
+			qInit += tx + ty + tz;
+		}
+		return pInit + qInit;
 	}
 
 	public DoubleMatrix2D calculateRotationMatrix() {
 		translate();
-
 		initError = calculateInitError();
 
 		Algebra algebra = new Algebra();
@@ -76,7 +86,6 @@ public class Kabsch {
 		DoubleMatrix2D S = svd.getS();
 		DoubleMatrix2D U = svd.getU();
 
-		calcErr(S);
 		// check for right-handed coordinate system
 		int d = -1;
 		if (algebra.det(V) * algebra.det(U) > 0) {
@@ -89,8 +98,10 @@ public class Kabsch {
 
 		S = algebra.mult(S, updateMat);
 		U = algebra.mult(U, updateMat);
-		// DoubleMatrix2D tV = V.viewDice();
+		DoubleMatrix2D tV = V.viewDice();
 		DoubleMatrix2D tU = U.viewDice();
+
+		calcErr(S);
 
 		DoubleMatrix2D R = algebra.mult(V, tU);
 		return R;

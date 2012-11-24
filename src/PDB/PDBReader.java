@@ -37,19 +37,14 @@ public class PDBReader {
 					double x = findDouble(strLine.substring(30, 38));
 					double y = findDouble(strLine.substring(38, 46));
 					double z = findDouble(strLine.substring(46, 54));
-					double occupancy = findDouble(strLine.substring(54, 60));
-					double tempFactor = findDouble(strLine.substring(60, 66));
-					String element = strLine.substring(76, 78).trim();
-					String charge = strLine.substring(78, 80).trim();
+//					double occupancy = findDouble(strLine.substring(54, 60));
+//					double tempFactor = findDouble(strLine.substring(60, 66));
+//					String element = strLine.substring(76, 78).trim();
+//					String charge = strLine.substring(78, 80).trim();
 
 					curr = resSeq + chainID;
 
-					a = new cAtom(serial, name, altLoc, resName, chainID,
-							resSeq, iCode, x, y, z, occupancy, tempFactor,
-							element, charge);
-
-					if (chainID.equals("A"))
-						System.out.println("here");
+					a = new cAtom(serial, name, altLoc, resName, chainID, resSeq, iCode, x, y, z);
 
 					if (prev.equals("empty")) {
 						atoms.add(a);

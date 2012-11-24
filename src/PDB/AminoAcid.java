@@ -6,7 +6,7 @@ import java.util.List;
 
 @SuppressWarnings("rawtypes")
 public class AminoAcid implements Comparable {
-	
+
 	private List<cAtom> atoms = new ArrayList<cAtom>();
 	private String name;
 
@@ -16,7 +16,7 @@ public class AminoAcid implements Comparable {
 	}
 
 	public List<cAtom> getAtoms() {
-//		ArrayList<Atom> atomList = new ArrayList<Atom>(atoms.values());
+		// ArrayList<Atom> atomList = new ArrayList<Atom>(atoms.values());
 		return atoms;
 	}
 
@@ -43,14 +43,35 @@ public class AminoAcid implements Comparable {
 		else
 			return 0;
 	}
-	
+
 	public List<cAtom> getBackbone() {
 		Collections.sort(atoms);
 		ArrayList<cAtom> result = new ArrayList<cAtom>();
 		result.add(atoms.get(0));
 		result.add(atoms.get(1));
-		
+		result.add(atoms.get(2));
+		result.add(atoms.get(3));
+
 		return result;
 	}
 
+	public boolean hasCa() {
+		for (cAtom a : atoms) {
+			if (a.name.equals("CA"))
+				return true;
+		}
+		return false;
+	}
+	
+	public cAtom getCa() {
+		for (cAtom a : atoms) {
+			if (a.name.equals("CA"))
+				return a;
+		}
+		return null;
+	}
+
+	public String toString() {
+		return atoms.get(0).getResName();
+	}
 }

@@ -43,13 +43,13 @@ public class Procrustes {
 	private void multiply1with2(DoubleMatrix1D mat1D, DoubleMatrix2D mat2D,
 			DoubleMatrix1D result) {
 		double[] t = new double[3];
-		for (int i = 0; i < 2; i++) {
-			for (int j = 0; j < 2; j++) {
+		for (int i = 0; i < 3; i++) {
+			for (int j = 0; j < 3; j++) {
 				t[i] += mat1D.get(j) * mat2D.get(j, i);
 			}
 		}
 		result.assign(t);
-
+		int i = 0;
 	}
 
 	public DoubleMatrix2D getP() {

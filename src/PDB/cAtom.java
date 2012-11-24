@@ -8,14 +8,15 @@ public class cAtom implements Comparable {
 	String chainID;
 	int resSeq;
 	String iCode;
-	double x, y, z, occupancy, tempFactor;
-	String element;
-	String charge;
+	double x, y, z;
+
+	public cAtom() {
+		// TODO Auto-generated constructor stub
+	}
 
 	public cAtom(int serial, String name, String altLoc, String resName,
 			String chainID, int resSeq, String iCode, double x, double y,
-			double z, double occupancy, double tempFactor, String element,
-			String charge) {
+			double z) {
 		this.serial = serial;
 		this.name = name;
 		this.altLoc = altLoc;
@@ -26,14 +27,6 @@ public class cAtom implements Comparable {
 		this.x = x;
 		this.y = y;
 		this.z = z;
-		this.occupancy = occupancy;
-		this.tempFactor = tempFactor;
-		this.element = element;
-		this.charge = charge;
-	}
-
-	public cAtom() {
-		// TODO Auto-generated constructor stub
 	}
 
 	public int getSerial() {
@@ -116,38 +109,6 @@ public class cAtom implements Comparable {
 		this.z = z;
 	}
 
-	public double getOccupancy() {
-		return occupancy;
-	}
-
-	public void setOccupancy(double occupancy) {
-		this.occupancy = occupancy;
-	}
-
-	public double getTempFactor() {
-		return tempFactor;
-	}
-
-	public void setTempFactor(double tempFactor) {
-		this.tempFactor = tempFactor;
-	}
-
-	public String getElement() {
-		return element;
-	}
-
-	public void setElement(String element) {
-		this.element = element;
-	}
-
-	public String getCharge() {
-		return charge;
-	}
-
-	public void setCharge(String charge) {
-		this.charge = charge;
-	}
-
 	public String toString() {
 		String result = "";
 		result += "ATOM  ";
@@ -160,8 +121,8 @@ public class cAtom implements Comparable {
 		while (name.length() < 4)
 			name += " ";
 		result += name;
-		
-		if(altLoc.isEmpty())
+
+		if (altLoc.isEmpty())
 			result += " ";
 		else
 			result += altLoc;
@@ -177,7 +138,7 @@ public class cAtom implements Comparable {
 			resSeq += " ";
 		result += resSeq;
 
-		if(iCode.isEmpty())
+		if (iCode.isEmpty())
 			result += " ";
 		else
 			result += iCode;
@@ -194,26 +155,6 @@ public class cAtom implements Comparable {
 		while (zc.length() < 8)
 			zc += " ";
 		result += xc + yc + zc;
-
-		String occ = Double.toString(occupancy);
-		while (occ.length() < 6)
-			occ += " ";
-		result += occ;
-
-		String temp = Double.toString(tempFactor);
-		while (temp.length() < 6)
-			temp += " ";
-		result += temp;
-
-		result += "          ";
-
-		while (element.length() < 2)
-			element += " ";
-		result += element;
-
-		while (charge.length() < 2)
-			charge += " ";
-		result += charge;
 
 		return result;
 	}

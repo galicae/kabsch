@@ -7,7 +7,7 @@ import PDB.AminoAcid;
 
 public class Alignment {
 
-	private static int GAP = (int) "-".charAt(0);
+	private static char GAP = "-".charAt(0);
 	public char[][] ali;
 	public AminoAcid[] refStruct;
 
@@ -19,25 +19,66 @@ public class Alignment {
 		// TODO Auto-generated constructor stub
 	}
 
-	public void synchronizeStructure(int seqIndex, List<AminoAcid> aminoacids, AminoAcid[] aminoArray) {
+	public AminoAcid[] synchronizeStructure(int seqIndex,
+			List<AminoAcid> aminoacids, AminoAcid[] aminoArray) {
 		int aliCounter = 0;
-		for (char c : ali[1]) {
+		for (char c : ali[seqIndex]) {
 			if (c != GAP) {
 				aliCounter++;
 			}
 		}
 		aminoArray = new AminoAcid[aliCounter];
 
-		Collections.sort(aminoacids);
+		// Collections.sort(aminoacids);
 		int aminoCount = 0;
-		for (int i = 0; i < aliCounter; i++) {
-			while (ali[seqIndex][i] == GAP)
+		for (int i = 0; i < ali[seqIndex].length; i++) {
+			while (i < ali[seqIndex].length && ali[seqIndex][i] == GAP)
 				i++;
-			if (sameAminoAcid(ali[seqIndex][i], aminoacids.get(aminoCount))) {
+			if (i < ali[seqIndex].length
+					&& sameAminoAcid(ali[seqIndex][i],
+							aminoacids.get(aminoCount))) {
 				aminoArray[aminoCount] = aminoacids.get(aminoCount);
 				aminoCount++;
 			}
 		}
+		return aminoArray;
+	}
+
+	public AminoAcid[][] synchronizeKabschStructure(List<AminoAcid> seq1,
+			List<AminoAcid> seq2) {
+		int aliCounter = 0;
+		for (int i = 0; i < ali[0].length; i++) {
+			if (ali[0][i] == GAP || ali[1][i] == GAP) {
+				continue;
+			}
+			aliCounter++;
+		}
+		AminoAcid[][] aminoArray = new AminoAcid[2][aliCounter];
+
+		// Collections.sort(aminoacids);
+		int aminoCount = 0;
+		int seq1Counter = 0;
+		int seq2Counter = 0;
+		for (int i = 0; i < ali[0].length; i++) {
+			if (ali[0][i] == GAP) {
+				seq2Counter++;
+				continue;
+			}
+			if (ali[1][i] == GAP) {
+				seq1Counter++;
+				continue;
+			}
+			aminoArray[0][aminoCount] = seq1.get(seq1Counter);
+			aminoArray[1][aminoCount] = seq2.get(seq2Counter);
+			seq1Counter++;
+			seq2Counter++;
+			aminoCount++;
+		}
+		return aminoArray;
+	}
+
+	public char[][] getAlignment() {
+		return ali;
 	}
 
 	private boolean sameAminoAcid(char c, AminoAcid aminoAcid) {
