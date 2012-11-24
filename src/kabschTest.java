@@ -1,4 +1,4 @@
-import kabsch.KabschMain;
+import kabsch.KabschCollective;
 import kabsch.Procrustes;
 import PDB.AminoAcid;
 import cern.colt.matrix.DoubleFactory2D;
@@ -18,7 +18,7 @@ public class kabschTest {
 //				{ 0, 1, 2 }, { 0.5, 0.5, 2 } };
 //
 //		
-		KabschMain main = new KabschMain();
+		KabschCollective main = new KabschCollective();
 		String a = args[0];
 		String a1 = args[1];
 		String a2 = args[2];
